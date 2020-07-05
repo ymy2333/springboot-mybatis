@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--插值表达式，类似于EL-->
+<p th:text="${hello}"></p>
+--[[${hello}]]--
+
+<form id="login-form" th:action="@{/demo}" method="post">
+       <button>提交</button>
+</form>
+
+<table border="1" >
+    <tr>
+        <td>下标</td>
+        <td>用户名</td>
+        <td>密码</td>
+        <td>姓名</td>
+    </tr>
+<!--    user这个名字随便起-->
+    <tr th:each="user,status:${users}">
+        <td>[[${status.count}]]</td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.password}">密码</td>
+        <td th:text="${user.name}">姓名</td>
+    </tr>
+
+    <div>
+        获取Key=NO的值：<span th:text="${dataMap.No}"></span><br/>
+        获取key=address的值：<span th:text="${dataMap.address}"></span> <br/>
+    </div>
+
+    <div th:each="entry:${dataMap}">
+        <span th:text="${entry.key}"></span>
+        <span th:text="${entry.value}"></span>
+    </div>
+
+    <div th:each="nm,nmStat:${names}">
+        <span th:text="${nmStat.count}"></span>
+        <span th:text="${nm}"></span>
+        ==============================================
+    </div>
+
+    <div>
+        <span th:text="${#dates.format(now,'yyyy-MM-dd HH:mm:ss')}"></span>
+    </div>
+
+    <div th:text="${session.uname}"></div>
+
+    <!--
+if:th：unless表示条件不成立 ，输出数据
+-->
+    <div>
+        <span th:if="${(age>=18)}">终于长大了！</span>
+    </div>
+
+<!--    根据footer进行视图解析-->
+    <div th:include="footer::copy">
+    </div>
+</table>
+</body>
+</html>
